@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dostlar | Güvenilir Siteler</title>
+    <title>SAGOCASİNO | Güvenilir Siteler</title>
     <link rel="stylesheet" href="app.css">
     <link rel="shortcut icon" href="img/siteico.png">
     <link rel="stylesheet" href="ajax/swiper.min.css">
@@ -351,7 +351,7 @@
             },
             created(){
                 this.loading = true;
-                axios.get('dostlar.json')
+                axios.get('sago.json')
                 .then((response) => {
                         this.client = response.data.html
                         this.leftFix = _.find(this.client.categories, ['id', "1706206125458"]);
