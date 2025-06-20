@@ -57,6 +57,17 @@
                 "sort": "null",
                 "color": "#ff6c00",
                 "sitepic": "..\/img\/logo\/starz.png"
+            },
+            {
+                "url": "https:\/\/t.me\/+rQu6kRxOnzY2ZWM8",
+                "desc": [
+                    "TELEGRAM KOD KANALI",
+                    "HERGÜN YÜZLERCE BEDAVA KOD"
+                ],
+                "site": "telegramkod",
+                "sort": "null",
+                "color": "#1fe1ff",
+                "sitepic": "..\/img\/logo\/telegram.png"
             }
         ],
         "social": {
@@ -154,7 +165,7 @@
                 "sort": "1",
                 "sites": [
                     {
-                        "site": "starz",
+                        "site": "telegramkod",
                         "sort": "1"
                     }
                 ]
