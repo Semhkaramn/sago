@@ -102,6 +102,21 @@
                         "site": "mistycasino",
                         "sort": "1",
                         "bg": ".jpg"
+                    },
+                    {
+                        "site": "betkom",
+                        "sort": "2",
+                        "bg": ".jpg"
+                    },
+                    {
+                        "site": "starz",
+                        "sort": "3",
+                        "bg": ".jpg"
+                    },
+                    {
+                        "site": "trwin",
+                        "sort": "4",
+                        "bg": ".jpg"
                     }
                 ]
             },
@@ -113,20 +128,8 @@
                 "sort": "1",
                 "sites": [
                     {
-                        "site": "betkom",
-                        "sort": "1"
-                    },
-                    {
-                        "site": "trwin",
-                        "sort": "2"
-                    },
-                    {
                         "site": "savoycasino",
-                        "sort": "3"
-                    },
-                    {
-                        "site": "starz",
-                        "sort": "4"
+                        "sort": "1"
                     }
                 ]
             },
