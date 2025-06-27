@@ -37,17 +37,6 @@
                 "sitepic": "..\/img\/logo\/trwin.png"
             },
             {
-                "url": "https:\/\/tinyurl.com\/SavoySago",
-                "desc": [
-                    "500 tl DENEME bonusu",
-                    "%20 KAYIP BONUSU"
-                ],
-                "site": "savoycasino",
-                "sort": "null",
-                "color": "#f9aa25",
-                "sitepic": "..\/img\/logo\/savoycasino.png"
-            },
-            {
                 "url": "https:\/\/cutt.ly\/8efhGKRx",
                 "desc": [
                     "750 TL DENEME BONUSU",
@@ -68,6 +57,17 @@
                 "sort": "null",
                 "color": "#1fe1ff",
                 "sitepic": "..\/img\/logo\/telegram.png"
+            },
+            {
+                "url": "https:\/\/partnerjanti.com\/p\/sagocasino",
+                "desc": [
+                    "1000₺ DENEME BONUSU",
+                    "%30 KAYIP BONUSU"
+                ],
+                "site": "janticasino",
+                "sort": "null",
+                "color": "#c7aa53",
+                "sitepic": "..\/img\/logo\/janticasino.png"
             }
         ],
         "social": {
@@ -120,7 +120,7 @@
                         "bg": ".jpg"
                     },
                     {
-                        "site": "savoycasino",
+                        "site": "janticasino",
                         "sort": "3",
                         "bg": ".jpg"
                     },
