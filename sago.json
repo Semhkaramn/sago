@@ -31,13 +31,13 @@
       "title": "DUYURU KANALIMIZ",
       "subtitle": "Telegram",
       "url": "https://t.me/sagoduyuruetkinlik",
-      "icon": "img/duyuru.gif"
+      "icon": "img/duyuru.png"
     },
     {
       "title": "SOHBET KANALIMIZ",
       "subtitle": "Telegram",
       "url": "https://t.me/CSSAGO",
-      "icon": "img/sohbet.gif"
+      "icon": "img/sohbet.png"
     }
   ],
   "popup_settings": {
