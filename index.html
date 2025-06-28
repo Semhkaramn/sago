@@ -1119,6 +1119,9 @@
         function updateHeader(data) {
             document.getElementById('header-logo').src = data.site_config.logo;
             document.getElementById('instagram-link').href = data.social_links.instagram;
+            document.getElementById('header-logo').src = data.site_config.logo;
+            document.getElementById('telegram-main-link').href = data.social_links.telegram_main;
+            
 
             const headerLinks = document.getElementById('header-links');
             headerLinks.innerHTML = '';
