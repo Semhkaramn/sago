@@ -1043,7 +1043,7 @@
                 return;
             }
 
-            fetch('sago.json?t=' + new Date().getTime())
+            fetch('sago.json' + new Date().getTime())
                 .then(res => res.json())
                 .then(data => {
                     siteConfig = data;
