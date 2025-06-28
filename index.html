@@ -812,199 +812,108 @@
             </div>
         </div>
     </div>
-
+      
     <script>
-        // Developer Tools Protection
-        (function() {
-            'use strict';
+    // Global config object
+    let siteConfig = {};
 
-            // F12, Ctrl+Shift+I, Ctrl+U engelleme
-            document.addEventListener('keydown', function(e) {
-                // F12
-                if (e.keyCode === 123) {
-                    e.preventDefault();
-                    return false;
-                }
-                // Ctrl+Shift+I (DevTools)
-                if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
-                    e.preventDefault();
-                    return false;
-                }
-                // Ctrl+U (View Source)
-                if (e.ctrlKey && e.keyCode === 85) {
-                    e.preventDefault();
-                    return false;
-                }
-                // Ctrl+Shift+C (Inspect Element)
-                if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
-                    e.preventDefault();
-                    return false;
-                }
-                // Ctrl+S (Save Page)
-                if (e.ctrlKey && e.keyCode === 83) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
+    // ColorThief kullanımı için global instance
+    const colorThief = new ColorThief();
 
-            // Text selection engelleme
-            document.addEventListener('selectstart', function(e) {
-                e.preventDefault();
-                return false;
-            });
+    function isWhiteOrVeryLight(rgb) {
+        return (rgb[0] > 220 && rgb[1] > 220 && rgb[2] > 220) ||
+               (rgb[0] + rgb[1] + rgb[2] > 650);
+    }
 
-            // DevTools açık mı kontrol et
-            let devtools = {
-                open: false,
-                orientation: null
-            };
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
 
-            const threshold = 160;
-            let interval = setInterval(function() {
-                if (window.outerHeight - window.innerHeight > threshold ||
-                    window.outerWidth - window.innerWidth > threshold) {
-                    if (!devtools.open) {
-                        devtools.open = true;
-                        // DevTools açıldı, uyarı göster ve sayfayı yönlendir
-                        document.getElementById('dev-warning').style.display = 'block';
-                        setTimeout(() => {
-                            window.location.href = 'about:blank';
-                        }, 2000);
+    function applyDominantColor(img, element) {
+        try {
+            if (img.complete) {
+                const palette = colorThief.getPalette(img, 5);
+                let dominantColor = palette[0];
+
+                for (let i = 0; i < palette.length; i++) {
+                    if (!isWhiteOrVeryLight(palette[i])) {
+                        dominantColor = palette[i];
+                        break;
                     }
-                } else {
-                    devtools.open = false;
                 }
-            }, 500);
 
-            // Console mesajları temizle
-            if (typeof console !== 'undefined') {
-                console.clear();
-                console.log = function() {};
-                console.warn = function() {};
-                console.error = function() {};
-                console.info = function() {};
-                console.debug = function() {};
-            }
-
-            // Debugger bypass
-            function detectDebugger() {
-                const before = new Date();
-                debugger;
-                const after = new Date();
-                if (after - before > 100) {
-                    window.location.href = 'about:blank';
-                }
-            }
-
-            // Her 1 saniyede debugger kontrolü
-            setInterval(detectDebugger, 1000);
-
-            // Script tag'lerini gizle
-            function hideScripts() {
-                const scripts = document.querySelectorAll('script');
-                scripts.forEach(script => {
-                    if (script.innerHTML.includes('siteConfig') ||
-                        script.innerHTML.includes('loadSiteConfiguration')) {
-                        script.style.display = 'none';
-                        script.remove();
-                    }
+                const hexColor = rgbToHex(dominantColor[0], dominantColor[1], dominantColor[2]);
+                element.style.setProperty('--site-color', hexColor);
+            } else {
+                img.addEventListener('load', function() {
+                    applyDominantColor(img, element);
                 });
             }
-
-            // DOM yüklendikten sonra script'leri gizle
-            document.addEventListener('DOMContentLoaded', hideScripts);
-        })();
-
-        // Global config object
-        let siteConfig = {};
-
-        // Global functions for color detection
-        const colorThief = new ColorThief();
-
-        function isWhiteOrVeryLight(rgb) {
-            return (rgb[0] > 220 && rgb[1] > 220 && rgb[2] > 220) ||
-                   (rgb[0] + rgb[1] + rgb[2] > 650);
+        } catch (error) {
+            console.error('Renk tespiti hatası:', error);
         }
+    }
 
-        function rgbToHex(r, g, b) {
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
+    function applyBandItemColor(img, element) {
+        try {
+            if (img.complete) {
+                const palette = colorThief.getPalette(img, 5);
+                let dominantColor = palette[0];
 
-        function applyDominantColor(img, element) {
-            try {
-                if (img.complete) {
-                    const palette = colorThief.getPalette(img, 5);
-                    let dominantColor = palette[0];
-
-                    for (let i = 0; i < palette.length; i++) {
-                        if (!isWhiteOrVeryLight(palette[i])) {
-                            dominantColor = palette[i];
-                            break;
-                        }
+                for (let i = 0; i < palette.length; i++) {
+                    if (!isWhiteOrVeryLight(palette[i])) {
+                        dominantColor = palette[i];
+                        break;
                     }
-
-                    const hexColor = rgbToHex(dominantColor[0], dominantColor[1], dominantColor[2]);
-                    element.style.setProperty('--site-color', hexColor);
-                } else {
-                    img.addEventListener('load', function() {
-                        applyDominantColor(img, element);
-                    });
                 }
-            } catch (error) {
-                console.error('Renk tespiti hatası:', error);
+
+                const r = dominantColor[0];
+                const g = dominantColor[1];
+                const b = dominantColor[2];
+                const hexColor = rgbToHex(r, g, b);
+
+                element.style.setProperty('--band-color', hexColor);
+                element.style.setProperty('--band-color-rgb', `${r}, ${g}, ${b}`);
+            } else {
+                img.addEventListener('load', function() {
+                    applyBandItemColor(img, element);
+                });
             }
+        } catch (error) {
+            console.error('Kayan bant renk tespiti işlem hatası:', error);
         }
+    }
 
-        function applyBandItemColor(img, element) {
-            try {
-                if (img.complete) {
-                    const palette = colorThief.getPalette(img, 5);
-                    let dominantColor = palette[0];
+    // Helper function to find site by name
+    function findSite(siteName) {
+        return siteConfig.sites ? siteConfig.sites.find(site => site.site === siteName) : null;
+    }
 
-                    for (let i = 0; i < palette.length; i++) {
-                        if (!isWhiteOrVeryLight(palette[i])) {
-                            dominantColor = palette[i];
-                            break;
-                        }
-                    }
+    // Sayfa yüklendiğinde preloader'ı gizle, app'i göster
+    document.addEventListener("DOMContentLoaded", function() {
+        const preloader = document.getElementById('preloader');
+        const appPage = document.getElementById('app-v-page');
 
-                    const r = dominantColor[0];
-                    const g = dominantColor[1];
-                    const b = dominantColor[2];
-                    const hexColor = rgbToHex(r, g, b);
+        if (preloader) preloader.style.display = 'none';
+        if (appPage) appPage.style.display = 'block';
 
-                    element.style.setProperty('--band-color', hexColor);
-                    element.style.setProperty('--band-color-rgb', `${r}, ${g}, ${b}`);
-                } else {
-                    img.addEventListener('load', function() {
-                        applyBandItemColor(img, element);
-                    });
-                }
-            } catch (error) {
-                console.error('Kayan bant renk tespiti işlem hatası:', error);
-            }
-        }
+        loadSiteConfiguration();
+    });
 
-        // Helper function to find site by name
-        function findSite(siteName) {
-            return siteConfig.sites ? siteConfig.sites.find(site => site.site === siteName) : null;
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById('preloader').style.display = 'none';
-            document.getElementById('app-v-page').style.display = 'block';
-
-            loadSiteConfiguration();
-        });
-
-        function loadSiteConfiguration() {
-            // Anti-debugging
-            const startTime = performance.now();
-            debugger;
-            if (performance.now() - startTime > 100) {
-                window.location.href = 'about:blank';
-                return;
-            }
+    function loadSiteConfiguration() {
+        fetch('sago.json?' + Date.now())
+            .then(res => {
+                if (!res.ok) throw new Error("JSON yüklenemedi!");
+                return res.json();
+            })
+            .then(data => {
+                siteConfig = data;
+                console.log('Config yüklendi:', siteConfig);
+            })
+            .catch(err => {
+                console.error('JSON hatası:', err);
+            });
+    }
 
             fetch('sago.json?' + new Date().getTime())
                 .then(res => res.json())
