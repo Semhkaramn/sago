@@ -1,0 +1,19 @@
+body {
+    margin: 0px;
+    --bg: #12141e;
+    --menu: #1e1d32;
+    --card: #24253b;
+    --card2: #24253b;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    background-size: 100%;
+    --color: #FFFFFF;
+    background: var(--bg);
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    color: #E0E0E0;
+    background-size: 100% 100%;
+}
+
